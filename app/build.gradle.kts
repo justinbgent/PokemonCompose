@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-//    kotlin("kapt") TODO: Kapt breaks my build when running the app
-//    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -37,6 +37,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    /// Kapt breaks my build when running the app, unless I use the below:
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs> {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
     }
     buildFeatures {
         compose = true
@@ -77,15 +83,15 @@ dependencies {
     implementation("com.squareup.okhttp:okhttp:2.2.0")
 
     // Room
-//    implementation("androidx.room:room-runtime:2.5.2")
-//    kapt("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-runtime:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
 //    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-//    // Hilt
-//    implementation("com.google.dagger:hilt-android:2.44")
-//    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
 }
